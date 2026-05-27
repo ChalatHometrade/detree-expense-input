@@ -342,7 +342,7 @@
     const price = Number(elements.priceInput.value);
 
     if (!elements.purchaseDate.value) errors.push("กรุณาเลือกวันที่ซื้อ");
-    if (!elements.itemInput.value.trim() && !elements.suggestedItem.value.trim()) errors.push("กรุณากรอกรายการสินค้า");
+    if (!elements.itemInput.value.trim()) errors.push("กรุณากรอกรายการสินค้า");
     if (!elements.priceInput.value) errors.push("กรุณากรอกราคา");
     if (elements.priceInput.value && (!Number.isFinite(price) || price <= 0)) errors.push("ราคาต้องมากกว่า 0");
     if (!elements.categorySelect.value) errors.push("กรุณาเลือกหมวดหมู่");
@@ -359,12 +359,12 @@
 
   function buildExpenseRow() {
     const dateParts = convertDateToThaiParts(elements.purchaseDate.value);
-    const finalItem = normalizeItemName(elements.suggestedItem.value || elements.itemInput.value);
+    const rawItem = elements.itemInput.value.trim().replace(/\s+/g, " ");
     const price = Number(elements.priceInput.value);
 
     return {
       ...dateParts,
-      "รายการสินค้า": finalItem,
+      "รายการสินค้า": rawItem,
       "ราคา": Number.isInteger(price) ? price : Number(price.toFixed(2)),
       "หมวดหมู่": elements.categorySelect.value
     };
